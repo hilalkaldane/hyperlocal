@@ -11,7 +11,7 @@ export async function initData() {
   try {
     await supabase.from("campaigns").delete().neq("id", 0);
     await supabase.from("merchants").delete().neq("id", 0);
-    await supabase.from("categories").delete().neq("id","");
+    await supabase.from("categories").delete().neq("id", "");
 
     // Categories
     const { data: existingCats } = await supabase.from("categories").select("id,label,image");
@@ -75,54 +75,65 @@ export const merchantApi = {
   },
 
   async dashboardMonthly(merchantId) {
-    if (!merchantId) throw new Error("Merchant ID required");
-  
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth(); // 0-indexed
-  
-    const start = new Date(year, month, 1); // first day of current month
-    const end = new Date(year, month + 1, 0); // last day of current month
-  
-    const startStr = start.toISOString().slice(0, 10);
-    const endStr = end.toISOString().slice(0, 10);
-  
-    // Fetch issued coupons for this merchant
-    const { data: issuedData, error: issuedErr } = await supabase
-      .from("coupons")
-      .select("issued_at, campaign_id ( merchant_id )")
-      .gte("issued_at", startStr)
-      .lte("issued_at", endStr)
-      .eq("campaign_id.merchant_id", merchantId);
-  
-    if (issuedErr) throw issuedErr;
-  
-    // Fetch redeemed coupons for this merchant
-    const { data: redeemedData, error: redeemedErr } = await supabase
-      .from("coupons")
-      .select("redeemed_at, campaign_id ( merchant_id )")
-      .gte("redeemed_at", startStr)
-      .lte("redeemed_at", endStr)
-      .eq("campaign_id.merchant_id", merchantId);
-  
-    if (redeemedErr) throw redeemedErr;
-  
-    // Build day-of-month array
-    const daysInMonth = end.getDate();
-    const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
-  
-    const issuedCounts = days.map(day =>
-      issuedData.filter(c => new Date(c.issued_at).getDate() === day).length
-    );
-  
-    const redeemedCounts = days.map(day =>
-      redeemedData.filter(c => new Date(c.redeemed_at)?.getDate() === day).length
-    );
-  
-    return { days, issued: issuedCounts, redeemed: redeemedCounts };
+if (!merchantId) throw new Error("Merchant ID required");
+
+  const today = new Date();
+
+  // 3 days before today
+  const start = new Date(today);
+  start.setDate(today.getDate() - 5);
+
+  // 5 days after today
+  const end = new Date(today);
+  end.setDate(today.getDate() + 5);
+
+  const startStr = start.toISOString().slice(0, 10);
+  const endStr = end.toISOString().slice(0, 10);
+
+  console.log({ startStr, endStr });
+
+  // Fetch issued coupons
+  const { data: issuedData, error: issuedErr } = await supabase
+    .from("coupons")
+    .select("issued_at, campaign_id!inner(merchant_id)")
+    .gte("issued_at", startStr)
+    .lte("issued_at", endStr)
+    .eq("campaign_id.merchant_id", merchantId);
+
+  if (issuedErr) throw issuedErr;
+
+  // Fetch redeemed coupons
+  const { data: redeemedData, error: redeemedErr } = await supabase
+    .from("coupons")
+    .select("redeemed_at, campaign_id!inner(merchant_id)")
+    .gte("redeemed_at", startStr)
+    .lte("redeemed_at", endStr)
+    .eq("campaign_id.merchant_id", merchantId);
+
+  if (redeemedErr) throw redeemedErr;
+
+  // Build list of days in the range
+  const days = [];
+  const loopDate = new Date(start);
+  while (loopDate <= end) {
+    days.push(loopDate.toISOString().slice(0, 10));
+    loopDate.setDate(loopDate.getDate() + 1);
   }
-  
-  
+
+  // Count issued per day
+  const issuedCounts = days.map(day =>
+    issuedData.filter(c => c.issued_at && c.issued_at.startsWith(day)).length
+  );
+
+  // Count redeemed per day
+  const redeemedCounts = days.map(day =>
+    redeemedData.filter(c => c.redeemed_at && c.redeemed_at.startsWith(day)).length
+  );
+
+  return { days, issued: issuedCounts, redeemed: redeemedCounts };
+  }
+
+
 };
 
 // ---------------- CAMPAIGN API ----------------
@@ -139,7 +150,7 @@ export const campaignApi = {
     const { data, error } = await supabase
       .from("campaigns")
       .select("*, merchants(name)")
-      .eq("merchant_id",merchantId)
+      .eq("merchant_id", merchantId)
       .order("id", { ascending: true });
     if (error) throw error;
     return data;
@@ -186,9 +197,9 @@ export const campaignApi = {
       .select("*")
       .eq("code", couponCode)
       .single();
-  
+
     if (error) throw error;
-  
+
     if (!coupon) {
       return { success: false, message: "Coupon not found" };
     }
@@ -196,7 +207,7 @@ export const campaignApi = {
     if (coupon.redeemed_at) {
       return { success: false, message: "Coupon already redeemed" };
     }
-  
+
     // Update redeemed_at timestamp
     const { data, error: redeemErr } = await supabase
       .from("coupons")
@@ -204,9 +215,9 @@ export const campaignApi = {
       .eq("code", couponCode)
       .select()
       .single();
-  
+
     if (redeemErr) throw redeemErr;
-  
+
     return { success: true, code: data.code, redeemedAt: data.redeemed_at };
   },
 
@@ -215,9 +226,9 @@ export const campaignApi = {
       discountType === "percentage"
         ? `${Number(discountValue)}% off`
         : discountType === "flat"
-        ? `₹${Number(discountValue)} off`
-        : null;
-  
+          ? `₹${Number(discountValue)} off`
+          : null;
+
     const { data, error } = await supabase
       .from("campaigns")
       .insert([

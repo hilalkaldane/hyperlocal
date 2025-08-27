@@ -19,10 +19,8 @@ export default function Dashboard() {
     setLoading(true);
     try {
       const res = await merchantApi.dashboardMonthly(merchantId);
-      console.log(res)
       setChartData(res);
     } catch (err) {
-      console.error(err);
       setChartData(null);
     } finally {
       setLoading(false);
@@ -51,7 +49,7 @@ export default function Dashboard() {
 
   return (
     <div className="p-4 bg-white border rounded">
-      <h3 className="text-lg font-semibold mb-3">Issued vs Redeemed (Past 30 Days)</h3>
+      <h3 className="text-lg font-semibold mb-3">Issued vs Redeemed (Past 10 Days)</h3>
       <Chart options={options} series={series} type="line" height={300} />
     </div>
   );

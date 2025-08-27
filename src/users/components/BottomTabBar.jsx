@@ -10,11 +10,11 @@ export default function BottomTabBar() {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 h-14 bg-white border-t border-gray-200 flex items-center justify-around z-40">
+    <nav className="fixed bottom-0 left-0 right-0 h-16 bg-white border-t border-gray-200 flex items-center justify-around z-40">
       {tabs.map((t) => (
         <NavLink key={t.label} to={t.to} className="flex flex-col items-center text-xs">
           <div className="w-4 h-4">{t.icon}</div>
-          <span className="mt-0.5">{t.label}</span>
+          <span className="text-[#6e6388] text-xs font-medium leading-normal tracking-[0.015em]">{t.label}</span>
         </NavLink>
       ))}
     </nav>

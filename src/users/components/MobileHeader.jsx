@@ -14,29 +14,21 @@ export default function MobileHeader() {
   }[loc.pathname.split("/")[1] ? `/${loc.pathname.split("/")[1]}` : "/"] || "Discover";
 
   return (
-    <header className="fixed top-0 left-0 right-0 h-14 bg-white border-b border-gray-200 flex items-center justify-between px-4 z-40">
-      <div className="flex items-center gap-3">
-        {/* optionally back button if not root */}
-        <button
-          onClick={() => nav(-1)}
-          className="p-1 rounded-md"
-          title="Back"
-          aria-label="Back"
-        >
-          {/* simple chevron */}
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-            <polyline points="15 18 9 12 15 6" />
-          </svg>
-        </button>
-      </div>
-
-      <div className="text-md font-semibold">HyperLocal</div>
-
-      <div className="flex items-center gap-3">
-        <button onClick={() => nav("/profile")} className="p-1" title="Messages">
-          <FiBell className="w-5 h-5" />
-        </button>
-      </div>
-    </header>
+    <div className="flex items-center bg-white p-4 pb-2 justify-between top-0 left-0">
+          <h2 className="text-[#131118] text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pl-12">Hyper Local</h2>
+          <div className="flex w-12 items-center justify-end">
+            <button
+              className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 bg-transparent text-[#131118] gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0"
+            >
+              <div className="text-[#131118]" data-icon="ListBullets" data-size="24px" data-weight="regular">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                  <path
+                    d="M80,64a8,8,0,0,1,8-8H216a8,8,0,0,1,0,16H88A8,8,0,0,1,80,64Zm136,56H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Zm0,64H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16ZM44,52A12,12,0,1,0,56,64,12,12,0,0,0,44,52Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,116Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,180Z"
+                  ></path>
+                </svg>
+              </div>
+            </button>
+          </div>
+        </div>
   );
 }

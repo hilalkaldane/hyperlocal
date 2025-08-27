@@ -35,7 +35,7 @@ export default function Discover() {
   }, [loadMerchants]);
 
   return (
-    <div className="px-4 pb-6">
+    <div className="px-4 pb-2">
       {/* Search Bar */}
       <div className="flex gap-3 items-center mt-2 mb-3">
         <input

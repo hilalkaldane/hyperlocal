@@ -19,6 +19,7 @@ import MerchantBottomTabBar from "./merchant/components/MerchantBottomTabBar";
 // Admin pages
 import AdminDashboard from "./admin/pages/AdminDashboard";
 import AdminBottomTabBar from "./admin/components/AdminBottomTabBar";
+import HomePage from "./users/pages/HomePage";
 
 export default function App() {
   const loc = useLocation();
@@ -50,14 +51,15 @@ export default function App() {
   const isAdminRoute = loc.pathname.startsWith("/admin");
 
   return (
-    <div className="relative h-full w-full">
+    <div
+      className="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden"
+    >
       {/* Mobile header for customers only */}
       {!isMerchantRoute && !isAdminRoute && <MobileHeader />}
 
       <main
-        className={`${
-          !isMerchantRoute && !isAdminRoute ? "pt-14 pb-16" : ""
-        } h-full overflow-auto`}
+        className={`${!isMerchantRoute && !isAdminRoute ? "" : ""
+          } overflow-auto`}
       >
         <Routes>
           {/* Customer routes */}

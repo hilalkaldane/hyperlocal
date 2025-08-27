@@ -1,5 +1,3 @@
-import React from 'react';
-import CategoryBox from '../components/CategoryBox';
 
 const categories = [
   { name: 'clothing', description: 'Fashion & Apparel' },
@@ -25,14 +23,6 @@ export default function HomePage() {
       </section>
 
       {/* Categories */}
-      <section className="max-w-6xl mx-auto px-6 py-16">
-        <h2 className="text-3xl font-bold mb-8 text-center">Browse Categories</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
-          {categories.map(({ name, description }) => (
-            <CategoryBox key={name} name={name} description={description} />
-          ))}
-        </div>
-      </section>
 
       {/* Optional value prop, testimonials, or other */}
 
