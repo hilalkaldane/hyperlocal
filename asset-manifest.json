@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/hyperlocal/static/css/main.52ac61c7.css",
-    "main.js": "/hyperlocal/static/js/main.12082f06.js",
+    "main.js": "/hyperlocal/static/js/main.b62ad84f.js",
     "index.html": "/hyperlocal/index.html",
     "main.52ac61c7.css.map": "/hyperlocal/static/css/main.52ac61c7.css.map",
-    "main.12082f06.js.map": "/hyperlocal/static/js/main.12082f06.js.map"
+    "main.b62ad84f.js.map": "/hyperlocal/static/js/main.b62ad84f.js.map"
   },
   "entrypoints": [
     "static/css/main.52ac61c7.css",
-    "static/js/main.12082f06.js"
+    "static/js/main.b62ad84f.js"
   ]
 }
