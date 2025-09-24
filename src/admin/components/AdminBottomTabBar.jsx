@@ -9,7 +9,7 @@ export default function AdminBottomTabBar() {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 h-14 bg-white border-t border-gray-200 flex items-center justify-around z-40">
+    <nav className="bottom-0 left-0 right-0 h-14 bg-white border-t border-gray-200 flex items-center justify-around z-40">
       {tabs.map((t) => (
         <NavLink
           key={t.label}

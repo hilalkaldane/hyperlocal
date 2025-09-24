@@ -71,7 +71,7 @@ useEffect(() => {
   return (
 
     <div className="max-w-4xl mx-auto pb-16 no-scrollbar">
-      <div class="flex gap-3 pl-3 pb-3 overflow-x-auto no-scrollbar">
+      <div class="flex gap-3 pl-3 pt-3 overflow-x-auto no-scrollbar">
         {cats.map((c) => (
           <div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#f2f0f4] pl-4 pr-4">
             <p class="text-[#131118] text-sm font-medium leading-normal">{c.label}</p>
@@ -148,7 +148,7 @@ useEffect(() => {
         <div
           className="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl flex-1"
           style={{
-            backgroundImage: `url("${merchant.categoryImage}")`
+            backgroundImage: `url("${merchant.categoryImage}${'?w=122&h=70&fit=crop&q=80&auto=format'}")`
           }}
         ></div>
       </div>

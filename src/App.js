@@ -52,7 +52,7 @@ export default function App() {
 
   return (
     <div
-      className="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden"
+      className="relative flex size-full min-h-screen flex-col bg-slate-50 group/design-root overflow-x-hidden"
     >
       {/* Mobile header for customers only */}
       {!isMerchantRoute && !isAdminRoute && <MobileHeader />}

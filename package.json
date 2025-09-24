@@ -9,8 +9,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy" : "npm run build",
-    "deploy" : "gh-pages -d build"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "keywords": [],
   "author": "",
@@ -22,11 +22,13 @@
     "gh-pages": "^6.3.0",
     "install": "^0.13.0",
     "npm": "^11.5.2",
+    "qrcode.react": "^4.2.0",
     "react": "^18.2.0",
     "react-apexcharts": "^1.7.0",
     "react-date-range": "^2.0.1",
     "react-dom": "^18.2.0",
     "react-icons": "^5.5.0",
+    "react-qr-scanner": "^1.0.0-alpha.11",
     "react-router-dom": "^6.30.1",
     "react-scripts": "^5.0.1"
   },

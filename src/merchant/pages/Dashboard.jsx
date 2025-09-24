@@ -14,7 +14,7 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(false);
 
   const fetchData = async () => {
-    console.log("Dashboard"+ ""+ merchantId)
+    console.log("Dashboard" + "" + merchantId)
     if (!merchantId) return;
     setLoading(true);
     try {
@@ -32,6 +32,9 @@ export default function Dashboard() {
   if (loading) return <div className="p-4">Loading chart…</div>;
   if (!chartData) return <div className="p-4">No data</div>;
 
+  const totalIssued = chartData.issued.reduce((a, b) => a + b, 0);
+  const totalRedeemed = chartData.redeemed.reduce((a, b) => a + b, 0);
+
   const series = [
     { name: "Issued", data: chartData.issued },
     { name: "Redeemed", data: chartData.redeemed }
@@ -48,9 +51,24 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="p-4 bg-white border rounded">
-      <h3 className="text-lg font-semibold mb-3">Issued vs Redeemed (Past 10 Days)</h3>
-      <Chart options={options} series={series} type="line" height={300} />
+    <div>
+      <div className="p-4 border rounded-lg w-full max-w-md">
+        <div className="text-gray-500 text-sm mb-2">Totals (Last 10 Days)</div>
+        <div className="flex items-center justify-between">
+          <div className="flex flex-col items-center flex-1">
+            <span className="text-sm font-medium text-gray-600">Issued</span>
+            <span className="text-2xl font-bold text-purple-600">{totalIssued}</span>
+          </div>
+          <div className="flex flex-col items-center flex-1">
+            <span className="text-sm font-medium text-gray-600">Redeemed</span>
+            <span className="text-2xl font-bold text-blue-600">{totalRedeemed}</span>
+          </div>
+        </div>
+      </div>
+      <div className="p-4 bg-white border rounded mx-auto min-h-md">
+        <h3 className="text-lg font-semibold mb-3">Issued vs Redeemed (Past 10 Days)</h3>
+        <Chart options={options} series={series} type="line" height={300} />
+      </div>
     </div>
   );
 }

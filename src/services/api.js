@@ -198,6 +198,8 @@ export const campaignApi = {
       .eq("code", couponCode)
       .single();
 
+    console.log("First Passed")
+
     if (error) throw error;
 
     if (!coupon) {

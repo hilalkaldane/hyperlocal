@@ -14,7 +14,7 @@ export default function MobileHeader() {
   }[loc.pathname.split("/")[1] ? `/${loc.pathname.split("/")[1]}` : "/"] || "Discover";
 
   return (
-    <div className="flex items-center bg-white p-4 pb-2 justify-between top-0 left-0">
+    <div className="flex items-center p-2 bg-[#f2f0f4] justify-between top-0 left-0 drop-shadow-md">
           <h2 className="text-[#131118] text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pl-12">Hyper Local</h2>
           <div className="flex w-12 items-center justify-end">
             <button
